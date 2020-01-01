@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { View, Image, Text, ScrollView, StyleSheet } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faEnvelope, faTruck } from '@fortawesome/free-solid-svg-icons';
 import MapView, { Marker } from 'react-native-maps';
-import Header from './header';
 
 class Contact extends Component {
   render() {
@@ -65,19 +62,6 @@ class Contact extends Component {
                     'http://versatiledigi.com/wp-content/uploads/line-separator-png-4.png'
                 }}
               />
-            </View>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                flexDirection: 'column',
-                alignItems: 'center'
-              }}
-            >
-              <Text>"In difficult times, fashion is always outrageous."</Text>
-              <Text style={{ fontStyle: 'italic', color: '#ccc' }}>
-                Elsa Schiaparelli
-              </Text>
             </View>
           </View>
         </View>

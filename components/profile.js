@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { NavigationEvents } from "react-navigation";
+import React, { Component } from 'react';
+import { NavigationEvents } from 'react-navigation';
 import {
   View,
   Text,
@@ -9,35 +9,34 @@ import {
   Button,
   AsyncStorage,
   ToastAndroid
-} from "react-native";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faUser, faTruck } from "@fortawesome/free-solid-svg-icons";
-import Header from "./header";
+} from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 class Contact extends Component {
   static navigationOptions = {
-    title: "Profile",
+    title: 'Profile',
     drawerIcon: ({ tintColor }) => <FontAwesomeIcon size={25} icon={faUser} />
   };
   constructor(props) {
     super(props);
-    this.state = { firstname: "", lastname: "", email: "", phone: "" };
+    this.state = { firstname: '', lastname: '', email: '', phone: '' };
   }
   componentDidMount() {
     this.retrieveData();
   }
   retrieveData = async () => {
     try {
-      userProfile = await AsyncStorage.getItem("userProfile");
+      userProfile = await AsyncStorage.getItem('userProfile');
       if (userProfile !== null) {
         userProfile = JSON.parse(userProfile);
       }
     } catch (error) {
       userProfile = {
-        firstname: "Alok",
-        lastname: "Mali",
-        email: "alok.mali@galaxyweblinks.in",
-        phone: "9907099143"
+        firstname: 'Alok',
+        lastname: 'Mali',
+        email: 'alok.mali@galaxyweblinks.in',
+        phone: '9907099143'
       };
     }
     this.setState({
@@ -49,9 +48,9 @@ class Contact extends Component {
   };
   saveProfile = async () => {
     try {
-      await AsyncStorage.setItem("userProfile", JSON.stringify(this.state));
+      await AsyncStorage.setItem('userProfile', JSON.stringify(this.state));
       ToastAndroid.showWithGravityAndOffset(
-        "Saved !",
+        'Saved !',
         ToastAndroid.SHORT,
         ToastAndroid.BOTTOM,
         0,
@@ -71,14 +70,14 @@ class Contact extends Component {
             flex: 1,
             marginLeft: 15,
             marginTop: 15,
-            justifyContent: "flex-start"
+            justifyContent: 'flex-start'
           }}
         >
           <View style={{ marginTop: 15 }}>
             <Text style={{ fontSize: 18 }}>First Name</Text>
             <TextInput
               style={{ height: 30, fontSize: 17 }}
-              placeholder="Type your first name here"
+              placeholder='Type your first name here'
               onChangeText={firstname => this.setState({ firstname })}
               value={this.state.firstname}
             />
@@ -87,7 +86,7 @@ class Contact extends Component {
             <Text style={{ fontSize: 18 }}>Last Name</Text>
             <TextInput
               style={{ height: 40, fontSize: 17 }}
-              placeholder="Type your last name here"
+              placeholder='Type your last name here'
               onChangeText={lastname => this.setState({ lastname })}
               value={this.state.lastname}
             />
@@ -96,7 +95,7 @@ class Contact extends Component {
             <Text style={{ fontSize: 18 }}>Email</Text>
             <TextInput
               style={{ height: 40, fontSize: 17 }}
-              placeholder="Type your email address here"
+              placeholder='Type your email address here'
               onChangeText={email => this.setState({ email })}
               value={this.state.email}
             />
@@ -104,16 +103,16 @@ class Contact extends Component {
           <View style={{ marginTop: 15 }}>
             <Text style={{ fontSize: 18 }}>Phone</Text>
             <TextInput
-              keyboardType={"phone-pad"}
+              keyboardType={'phone-pad'}
               style={{ height: 40, fontSize: 17 }}
-              placeholder="Type your phone number here"
+              placeholder='Type your phone number here'
               onChangeText={phone => this.setState({ phone })}
               value={this.state.phone}
             />
           </View>
         </View>
         <View style={{ margin: 15 }}>
-          <Button onPress={this.saveProfile} title="Save" />
+          <Button onPress={this.saveProfile} title='Save' />
         </View>
         <View
           style={{
@@ -121,30 +120,30 @@ class Contact extends Component {
             marginBottom: 15
           }}
         >
-          <View style={{ flex: 1, justifyContent: "flex-end" }}>
+          <View style={{ flex: 1, justifyContent: 'flex-end' }}>
             <Image
               style={{
                 height: 100,
-                resizeMode: "center"
+                resizeMode: 'center'
               }}
               source={{
                 uri:
-                  "http://versatiledigi.com/wp-content/uploads/line-separator-png-4.png"
+                  'http://versatiledigi.com/wp-content/uploads/line-separator-png-4.png'
               }}
             />
           </View>
           <View
             style={{
               flex: 1,
-              justifyContent: "center",
-              flexDirection: "column",
-              alignItems: "center"
+              justifyContent: 'center',
+              flexDirection: 'column',
+              alignItems: 'center'
             }}
           >
-            <Text style={{ textAlign: "center" }}>
+            <Text style={{ textAlign: 'center' }}>
               "Everyday is a fashion show and the worlds is your runway."
             </Text>
-            <Text style={{ fontStyle: "italic", color: "#ccc" }}>
+            <Text style={{ fontStyle: 'italic', color: '#ccc' }}>
               Coco Chanel
             </Text>
           </View>

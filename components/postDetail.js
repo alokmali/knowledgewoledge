@@ -1,17 +1,31 @@
 import React, { Component, useEffect } from 'react';
-import { Text, View, ScrollView, Image } from 'react-native';
+import { Text, View, ScrollView, Image, AsyncStorage } from 'react-native';
 import { postsDetails } from '../dataStore/data';
 
 const PostDetail = props => {
   let details = [];
   const navigation = props.navigation;
 
-  /*useEffect(() => {
-    setTimeout(() => {
+  /* useEffect(() => {
+     setTimeout(() => {
       console.log(this.scroller);
       this.scroller.current.scrollTo({ x: 10, y: 10, animated: false });
     }, 1);
-  }, []);*/
+    this._retrieveData();
+  }, []);
+
+  _retrieveData = async () => {
+    try {
+      let value = await AsyncStorage.getItem('pid');
+      console.log(value);
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };*/
 
   postsDetails.map(post => {
     if (post.postId == navigation.state.params.postId) {

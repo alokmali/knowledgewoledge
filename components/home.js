@@ -9,48 +9,53 @@ import {
   AsyncStorage
 } from 'react-native';
 //import AsyncStorage from '@react-native-community/async-storage';
+import { NavigationEvents } from 'react-navigation';
 import { posts } from '../dataStore/data';
 
 class Home extends Component {
-  savePost = async postId => {
-    try {
-      let savedPosts = new Array();
-      const retrivedPosts = await AsyncStorage.getItem('savedPosts');
-      //console.log(retrivedPosts);
-      if (retrivedPosts !== null) {
-        savedPosts = retrivedPosts;
-        console.log(retrivedPosts);
+  constructor(props) {
+    super(props);
+    this.state = { savedStories: [] };
+  }
+
+  getSavedPosts() {
+    AsyncStorage.getItem('savedStories', (err, result) => {
+      if (result !== null) {
+        let savedStories = JSON.parse(result);
+        this.setState({ savedStories: savedStories });
       }
-      savedPosts.push(postId);
-      //console.log(savedPosts);
-      try {
-        await AsyncStorage.setItem('savedPosts', savedPosts);
-        //console.log(savedPosts);
-      } catch (e) {
-        // saving error
+    });
+  }
+
+  savePost = postId => {
+    let savedStories = [];
+    AsyncStorage.getItem('savedStories', (err, result) => {
+      if (result !== null) {
+        savedStories = JSON.parse(result);
       }
-    } catch (error) {
-      // Error retrieving data
-    }
+      if (savedStories.indexOf(postId) <= -1) {
+        savedStories.push(postId);
+      }
+      AsyncStorage.setItem('savedStories', JSON.stringify(savedStories), () => {
+        this.setState({ savedStories });
+      });
+    });
   };
 
-  _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('TASKS');
-      alert(value);
-      if (value !== null) {
-        // We have data!!
-        console.log(value);
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
+  removedfromSaved = postId => {
+    let savedStories = this.state.savedStories.filter(function(ele) {
+      return ele != postId;
+    });
+    AsyncStorage.setItem('savedStories', JSON.stringify(savedStories), () => {
+      this.setState({ savedStories });
+    });
   };
 
   render() {
     return (
       <ScrollView>
         <View style={{ marginTop: 10 }}>
+          <NavigationEvents onDidFocus={() => this.getSavedPosts()} />
           {posts.map((post, index) => {
             return (
               <TouchableHighlight
@@ -119,13 +124,23 @@ class Home extends Component {
                       marginBottom: 10
                     }}
                   >
-                    <TouchableHighlight
-                      color='#1e89f4'
-                      style={styles.submit}
-                      onPress={() => this.savePost(post.id)}
-                    >
-                      <Text style={styles.submitText}>Save for Later</Text>
-                    </TouchableHighlight>
+                    {this.state.savedStories.indexOf(post.id) > -1 ? (
+                      <TouchableHighlight
+                        color='#1e89f4'
+                        style={styles.saved}
+                        onPress={() => this.removedfromSaved(post.id)}
+                      >
+                        <Text style={styles.savedText}>Saved for Later</Text>
+                      </TouchableHighlight>
+                    ) : (
+                      <TouchableHighlight
+                        color='#1e89f4'
+                        style={styles.save}
+                        onPress={() => this.savePost(post.id)}
+                      >
+                        <Text style={styles.saveText}>Save for Later</Text>
+                      </TouchableHighlight>
+                    )}
                   </View>
                 </View>
               </TouchableHighlight>
@@ -147,15 +162,28 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24
   },
-  submit: {
+  save: {
     paddingTop: 10,
     paddingBottom: 10,
-    backgroundColor: '#1e89f4',
+    backgroundColor: 'transparent',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#1e89f4'
+  },
+  saved: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: '#909090',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#fff'
   },
-  submitText: {
+  saveText: {
+    color: '#1e89f4',
+    textAlign: 'center',
+    fontSize: 16
+  },
+  savedText: {
     color: '#fff',
     textAlign: 'center',
     fontSize: 16

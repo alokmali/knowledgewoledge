@@ -1,22 +1,23 @@
 import React from 'react';
-import { View, Platform, Dimensions, Text } from 'react-native';
+import { View, Dimensions, Text } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator } from 'react-navigation-stack';
-import Home from '../components/home';
-import Contact from '../components/contact';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {
   faBars,
   faArrowLeft,
   faHome,
   faPhone,
-  faChartLine
+  faChartLine,
+  faClock
 } from '@fortawesome/free-solid-svg-icons';
-
+import Home from '../components/home';
+import Contact from '../components/contact';
 import Profile from '../components/profile';
 import Statistics from '../components/statistics';
 import PostDetail from '../components/postDetail';
+import Saved from '../components/saved';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -166,6 +167,39 @@ const DetailNavigator = createStackNavigator(
   }
 );
 
+const SavedNavigator = createStackNavigator(
+  {
+    Saved: Saved
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerStyle: {
+          backgroundColor: '#1e89f4'
+        },
+        headerTitle: 'Saved',
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          textAlign: 'center',
+          flex: 1
+        },
+        headerLeft: (
+          <View style={{ paddingLeft: 13 }}>
+            <FontAwesomeIcon
+              size={25}
+              color='#fff'
+              icon={faBars}
+              onPress={() => navigation.openDrawer()}
+            />
+          </View>
+        ),
+        headerRight: <View />
+      };
+    }
+  }
+);
+
 const RouteConfigs = {
   Home: {
     screen: HomeNavigator,
@@ -200,6 +234,15 @@ const RouteConfigs = {
       drawerLabel: () => {
         return null;
       }
+    }
+  },
+  Saved: {
+    screen: SavedNavigator,
+    navigationOptions: {
+      drawerLabel: 'Saved',
+      drawerIcon: ({ tintColor }) => (
+        <FontAwesomeIcon size={20} color={tintColor} icon={faClock} />
+      )
     }
   }
 };
