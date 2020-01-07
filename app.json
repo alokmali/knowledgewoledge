@@ -16,13 +16,19 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": ["assets/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.kralok.knowledgewoledge"
     },
     "android": {
-      "package": "com.kralok.knowledgewoledge"
+      "package": "com.kralok.knowledgewoledge",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBkJe02jD7Asnyjh-D4x84m2LJRUPwWrUI"
+        }
+      },
+      "permissions": ["VIBRATE"]
     }
   }
 }

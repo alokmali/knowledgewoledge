@@ -6,7 +6,8 @@ import {
   StyleSheet,
   ScrollView,
   TouchableHighlight,
-  AsyncStorage
+  AsyncStorage,
+  Vibration
 } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 //import AsyncStorage from '@react-native-community/async-storage';
@@ -48,6 +49,7 @@ class Saved extends Component {
           JSON.stringify(savedStories),
           () => {
             this.setState({ savedPosts });
+            Vibration.vibrate(100);
           }
         );
       }

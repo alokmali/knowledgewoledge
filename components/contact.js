@@ -45,25 +45,6 @@ class Contact extends Component {
               />
             </MapView>
           </View>
-          <View
-            style={{
-              flex: 1,
-              marginBottom: 15
-            }}
-          >
-            <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-              <Image
-                style={{
-                  height: 100,
-                  resizeMode: 'center'
-                }}
-                source={{
-                  uri:
-                    'http://versatiledigi.com/wp-content/uploads/line-separator-png-4.png'
-                }}
-              />
-            </View>
-          </View>
         </View>
       </ScrollView>
     );

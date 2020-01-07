@@ -4,10 +4,14 @@ import {
   Image,
   Text,
   StyleSheet,
+  //Share,
+  Button,
   ScrollView,
   TouchableHighlight,
-  AsyncStorage
+  AsyncStorage,
+  Vibration
 } from 'react-native';
+import Share from 'react-native-share';
 //import AsyncStorage from '@react-native-community/async-storage';
 import { NavigationEvents } from 'react-navigation';
 import { posts } from '../dataStore/data';
@@ -38,6 +42,7 @@ class Home extends Component {
       }
       AsyncStorage.setItem('savedStories', JSON.stringify(savedStories), () => {
         this.setState({ savedStories });
+        Vibration.vibrate(100);
       });
     });
   };
@@ -48,7 +53,44 @@ class Home extends Component {
     });
     AsyncStorage.setItem('savedStories', JSON.stringify(savedStories), () => {
       this.setState({ savedStories });
+      Vibration.vibrate(100);
     });
+  };
+
+  onShare = async () => {
+    const shareOptions = {
+      title: 'Share via',
+      message: 'some message',
+      url: 'some share url'
+    };
+    await Share.open(shareOptions)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        err && console.log(err);
+      });
+    /*try {
+      const result = await Share.share(
+        {
+          title: 'Here is demo title',
+          message: 'https://facebook.github.io/react-native/docs/share'
+        },
+        { dialogTitle: 'Here is demo dialogTitle' }
+      );
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }*/
   };
 
   render() {
@@ -141,6 +183,7 @@ class Home extends Component {
                         <Text style={styles.saveText}>Save for Later</Text>
                       </TouchableHighlight>
                     )}
+                    <Button onPress={this.onShare} title='Share' />
                   </View>
                 </View>
               </TouchableHighlight>
